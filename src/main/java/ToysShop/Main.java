@@ -9,27 +9,27 @@ import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-
         ToyStore toyStore = new ToyStore();
-        toyStore.addToy(new Toy(1, "машинка", 1, 33));
-        toyStore.addToy(new Toy(2, "кукла", 1, 33));
-        toyStore.addToy(new Toy(3, "айфон", 1, 33));
+        toyStore.addToy(new Toy(1, "Кукла", 5, 20));
+        toyStore.addToy(new Toy(2, "Машинка", 10, 30));
+        toyStore.addToy(new Toy(3, "хавигави", 8, 25));
+
+
+        toyStore.updateDropPercentage(1, 10);
+        toyStore.updateDropPercentage(2, 40);
+        toyStore.updateDropPercentage(3, 50);
 
 
         Toy drawnToy = toyStore.drawToy();
 
         if (drawnToy != null) {
             System.out.println("Выиграна игрушка: " + drawnToy.getName());
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter("prizes.txt", true))) {
-                writer.write("ID: " + drawnToy.getId() + ", Название: " + drawnToy.getName());
-                writer.newLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            toyStore.addToWonToys(drawnToy);
         } else {
             System.out.println("Игрушки закончились");
         }
+
+
+        toyStore.saveWonToysToFile();
     }
-
-
 }
